@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-require",
-  "version": "1.0.2",
+  "version": "2.1.0",
   "description": "Babel plugin that adds React import declaration if file contains JSX tags.",
   "keywords": [
     "babel",
@@ -27,24 +27,35 @@
     "url": "vslinko/babel-plugin-react-require"
   },
   "scripts": {
-    "prepublish": "npm run build-examples",
+    "clean": "rimraf lib",
+    "build": "babel src -d lib",
     "build-examples": "babel examples -d built-examples",
-    "lint": "eslint lib examples test",
-    "test": "mocha",
-    "test-coverage": "istanbul instrument --output lib-cov lib && mocha --reporter mocha-istanbul"
+    "lint": "eslint src examples test",
+    "prepublish": "npm run clean && npm run build && npm run build-examples",
+    "test": "mocha --compilers js:babel-core/register",
+    "test-coverage": "npm run build && istanbul instrument --output lib-cov lib && mocha --reporter mocha-istanbul"
   },
   "config": {},
   "dependencies": {},
   "devDependencies": {
-    "babel": "5.5.8",
-    "babel-core": "5.5.8",
-    "babel-eslint": "3.1.17",
-    "chai": "3.0.0",
-    "eslint": "0.23.0",
-    "eslint-plugin-react": "2.5.2",
-    "istanbul": "0.3.15",
-    "mocha": "2.2.5",
-    "mocha-istanbul": "0.2.0"
+    "babel-cli": "^6.2.0",
+    "babel-core": "^6.3.2",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-plugin-syntax-jsx": "^6.1.18",
+    "babel-plugin-transform-es2015-block-scoping": "^6.1.18",
+    "babel-plugin-transform-es2015-classes": "^6.3.2",
+    "babel-plugin-transform-es2015-destructuring": "^6.1.18",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.2.0",
+    "babel-plugin-transform-es2015-parameters": "^6.1.18",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.1.18",
+    "chai": "^3.4.1",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0",
+    "eslint-plugin-react": "^3.11.2",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4",
+    "mocha-istanbul": "^0.2.0",
+    "rimraf": "^2.4.4"
   },
   "peerDependencies": {},
   "bundledDependencies": [],
