@@ -15,8 +15,10 @@ export default function ({ types: t }) {
             return;
           }
 
-          const reactImportDeclaration = t.importDeclaration([
+          var reactImportDeclaration = t.importDeclaration([
             t.importDefaultSpecifier(t.identifier('React')),
+            t.importSpecifier(t.identifier('Component'), t.identifier('Component')),
+            t.importSpecifier(t.identifier('PropTypes'), t.identifier('PropTypes'))
           ], t.stringLiteral('react'));
 
           node.body.unshift(reactImportDeclaration);

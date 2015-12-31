@@ -21,9 +21,9 @@ describe('babel-plugin-react', () => {
   });
 
   it('should return transpiled code with required React', () => {
-    const transformed = transform('export default class Component {render() {return <div />}}');
+    const transformed = transform('export default class Foo {render() {return <div />}}');
 
-    assert.equal(transformed, 'import React from "react";\nexport default class Component {\n  render() {\n    return <div />;\n  }\n}');
+    assert.equal(transformed, 'import React, { Component, PropTypes } from "react";\nexport default class Foo {\n  render() {\n    return <div />;\n  }\n}');
   });
 
   it('should return not transpiled code', () => {
@@ -33,15 +33,15 @@ describe('babel-plugin-react', () => {
   });
 
   it('should check that plugin does not import React twice', () => {
-    const transformed = transform('class Component{render(){return <div/>}} class Component2{render(){return <div />}}');
+    const transformed = transform('class Foo{render(){return <div/>}} class Bar{render(){return <div />}}');
 
-    assert.equal(transformed, 'import React from "react";\nclass Component {\n  render() {\n    return <div />;\n  }\n}'
-      + 'class Component2 {\n  render() {\n    return <div />;\n  }\n}');
+    assert.equal(transformed, 'import React, { Component, PropTypes } from "react";\nclass Foo {\n  render() {\n    return <div />;\n  }\n}'
+      + 'class Bar {\n  render() {\n    return <div />;\n  }\n}');
   });
 
   it('should does not replace users import on plugins import', () => {
-    const transformed = transform('import React from"react/addons"\nclass Component{render(){return <div/>}}');
+    const transformed = transform('import React, { Component, PropTypes } from"react/addons"\nclass Qux{render(){return <div/>}}');
 
-    assert.equal(transformed, 'import React from "react/addons";\nclass Component {\n  render() {\n    return <div />;\n  }\n}');
+    assert.equal(transformed, 'import React, { Component, PropTypes } from "react/addons";\nclass Qux {\n  render() {\n    return <div />;\n  }\n}');
   });
 });
